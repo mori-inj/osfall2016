@@ -4,31 +4,39 @@
 
 ##### DUE: Monday ??/??/2016 at 8:59pm KST
 
-The programming project is to be done in your group. The Git repository your entire group will use to submit the programming project should be set in Github. The name of repository will be set as the name of your team. (e.g. `team1`). This repository will be accessible to all members of your team, and all team members are expected to commit (local) and push (update the server) changes / contributions to the repository equally. You should become familiar with team-based shared repository Git commands such as [git-pull](http://www.kernel.org/pub/software/scm/git/docs/git-pull.html), [git-push](http://www.kernel.org/pub/software/scm/git/docs/git-push.html), [git-merge](http://www.kernel.org/pub/software/scm/git/docs/git-merge.html), [git-fetch](http://www.kernel.org/pub/software/scm/git/docs/git-fetch.html).
+The programming project is to be done in your group. The Git repository your entire group will use to submit the programming project should be set in Github. The name of repository will be set as the name of your team. (e.g. `osfall2016-team1`). This repository will be accessible to all members of your team, and all team members are expected to commit (local) and push (update the server) changes / contributions to the repository equally. You should become familiar with team-based shared repository Git commands such as [git-pull](http://www.kernel.org/pub/software/scm/git/docs/git-pull.html), [git-push](http://www.kernel.org/pub/software/scm/git/docs/git-push.html), [git-merge](http://www.kernel.org/pub/software/scm/git/docs/git-merge.html), [git-fetch](http://www.kernel.org/pub/software/scm/git/docs/git-fetch.html).
 
 You should create a base branch named _proj1_ for Project 1\. All team members should make at least _five_ commits to the team's Git repository. The point is to make incremental changes and use an iterative development cycle. Your final codes and README file have to be committed into the _proj1_ branch for submission. Follow the [Linux kernel coding style](http://www.kernel.org/doc/Documentation/CodingStyle) and check your commits with the [<font color="red">checkpatch.pl</font>](https://github.com/torvalds/linux/blob/master/scripts/checkpatch.pl) script. Errors from the script in your submission will cause a deduction of points.
 
-The kernel programming for this assignment will be done using a Tizen-flashed Z3 device. Your Tizen device uses the ARM cpu family. Because the target CPU is (most likely) different from the CPU running in your personal computer, you will have to _cross-compile_ any software, including the linux kernel, to run on the different platform. We recommend using Ubuntu 12.04 LTS (64-bit), which we have tested all projects on. We do not guarantee that our guidelines work in other environments.
+The kernel programming for this assignment will be done using a Tizen-flashed TM1 device. Your Tizen device uses the ARM cpu family. Because the target CPU is (most likely) different from the CPU running in your personal computer, you will have to _cross-compile_ any software, including the linux kernel, to run on the different platform. We recommend using Ubuntu 12.04 LTS (64-bit), which we have tested all projects on. We do not guarantee that our guidelines work in other environments.
 
 
 
 1.  **(5 pts.) Set your development environment and install a custom Tizen kernel on your Z3 device**
 	1.  Download and Install Tizen SDK 2.4. 
 	
-		This SDK includes Smart Development Bridge ([sdb](https://developer.tizen.org/community/tip-tech/smart-development-bridge)) utility. We use the sdb in step 8 or problem 3 where you should push your built image or test program to your device/emulator. A brief description of sdb is in step 8.
+		This SDK includes Smart Development Bridge (sdb) utility. We use the sdb in step 8 or problem 3 where you should push your built image or test program to your device/emulator. A brief description of sdb is in step 8.
 		1. Download the installer from [this website](https://developer.tizen.org/development/tools/download)
 		2. Before starting the installation, check the [Install guide](https://developer.tizen.org/development/tools/download/installing-sdk) and [prerequisite](https://developer.tizen.org/development/tools/download/installing-sdk/prerequisites).
 		3. Execute the install manager and follow GUI instructions.   
-            ```
+            		
+            		```
 			$ chmod +x ./tizen-sdk-<\version>-ubuntu-<\bits>.bin
 			$ ./tizen-sdk-<\version>-ubuntu-<\bits>.bin
 			``` 
+			
 		4.  When the installation is done, 'tizen-sdk' and 'tizen-sdk-data' folder will be created.
 		
 	2. Download prerequisites
+		
 		```
-		sudo apt-get install ccache ia32-libs
+		sudo apt-get install lthor ccache
+		
+		sudo apt-get install ia32-libs (for Ubuntu 12.04)
+		or
+		sudo apt-get install lib32z1 lib32ncurses5 lib32bz2-1.0 (for later than Ubuntu 12.04)
 		```
+		
 	3.  Download the kernel source of Tizen kernel for the device.
 	
 		```
@@ -74,19 +82,43 @@ The kernel programming for this assignment will be done using a Tizen-flashed Z3
 		```
 		# build.sh should be in root of your kernel codes
 		# (e.g., /home/os/linux-3.10-sc7730/build.sh)
+		# Rebuild the kernel with build.sh whenever you modify the kernel source
 		
 		$ cd <your kernel path>
 		$ ./build.sh tizen_tm1 USR
+		
+		# Build and make kernel module image (module.img) as well. (You can skip this after your first compilation)
+		
+		$ sudo ls
+		$ scripts/mkmodimg.sh
+		
+		# Make a .tar archive from dzImage and modules.img
+		
+		$ tar cf IMAGE.tar -C arch/arm/boot dzImage -C ../../../usr/tmp-mod modules.img
+		
 		```
 
 	8.  Connect the phone to the Linux PC with a USB cable.  
     **Note: For virtual machine users, make sure that the Tizen USB device connects to guest OS and your virtualization software supports USB 3.0 port connection. (VirtualBox recently starts to support it since version 5.x)**
     
-	9. Copy the built image to SD card
+	9. Flash your image
+	
+		As I mentioned step 8, you should make the device enter the download mode first.
+		```
+		Turn off the device and then push power + volume down + home button.
+    		```
+    	
+		While the device is in download mode,
 		
-		You will use SD card to flash new kernel. Copy the built image to the SD card that is inserted to your device, and make your device enter the recovery mode. Then, your device flashes the images in SD card with recovery mode. **The SD card have to be formatted with ext4 file system**.
+		```
+		# Send the .tar image to the target using lthor
 		
-		First, let's copy the build image to SD card.
+		$ sudo lthor IMAGE.tar
+		```
+	
+		Then, the device will be rebooted and you can get the device with YOUR KERNEL!
+		
+	10. Copy the file to/from the device
 		
 		In order to push some files to your device, you will have to the Smart Development Bridge ([sdb](https://developer.tizen.org/community/tip-tech/smart-development-bridge)) utility. sdb is a command line tool that makes you able to easily manage your device/emulator through your development system (desktop or laptop). You may usually use it to check the connection with the device/emulator (`sdb devices`), push or pull files (`sdb push` or `sdb pull`), and get a shell of the device/emulator (`sdb shell`). For details, you can see [this link](https://developer.tizen.org/community/tip-tech/smart-development-bridge)
      	
@@ -114,34 +146,10 @@ The kernel programming for this assignment will be done using a Tizen-flashed Z3
 		```   
     	To pull a file out of the emulator:
 		```
-		$ sdb pull /path/in/emulator /local/path
+		$ sdb pull /home/developer/file /local/path
 		```
 		
-		Using the sdb commands, you can push your built image like this.
-		```
-		# To access SD card with sdb, you need root privilege.
-		$ sdb -d root on
 		
-		# Push your image to SD card. You need enough space in the SD card.
-		# In my case, system_kernel.tar was 5.1MB.
-		# The file name must be "tizen-recovery.tar"
-		$ sdb push system_kernel.tar /opt/storage/sdcard/tizen-recovery.tar
-		```
-		
-	10. Flash your image
-	
-		As I mentioned step 8, you should make the device enter the recovery mode first.
-		```
-		# In the device shell.
-		$ reboot recovery 
-		
-		or
-		
-		Turn off the device and then push power + volume up + home button.
-    	```
-    	
-		Entering the recovery mode, select **"Restore system from SD-card"**.
-		Then, the device will be rebooted and you can get the device with YOUR KERNEL!
 	
 2.  **(45 pts.) Write a new system call in Linux**  
     The system call you write should take two arguments and return the process tree information in a depth-first-search (DFS) pre-ordering order. Note that you will be modifying the Tizen kernel source which you previously built, and cross-compiling it to run on your Tizen device using the techniques described in problem 1.  
