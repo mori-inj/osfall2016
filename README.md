@@ -22,6 +22,7 @@ The kernel programming for this assignment will be done using a Tizen-flashed TM
             		
             		```
 			$ chmod +x ./tizen-sdk-<\version>-ubuntu-<\bits>.bin
+			
 			$ ./tizen-sdk-<\version>-ubuntu-<\bits>.bin
 			``` 
 			
@@ -30,11 +31,13 @@ The kernel programming for this assignment will be done using a Tizen-flashed TM
 	2. Download prerequisites
 		
 		```
-		sudo apt-get install lthor ccache
+		$ sudo apt-get install lthor ccache
 		
-		sudo apt-get install ia32-libs (for Ubuntu 12.04)
+		$ sudo apt-get install ia32-libs (for Ubuntu 12.04)
+		
 		or
-		sudo apt-get install lib32z1 lib32ncurses5 lib32bz2-1.0 (for later than Ubuntu 12.04)
+		
+		$ sudo apt-get install lib32z1 lib32ncurses5 lib32bz2-1.0 (for later than Ubuntu 12.04)
 		```
 		
 	3.  Download the kernel source of Tizen kernel for the device.
@@ -45,9 +48,9 @@ The kernel programming for this assignment will be done using a Tizen-flashed TM
 	
 	4. Change the branch to tizen_2.4.
 
-
 		```
 		$ cd linux-3.10-sc7730
+		
 		$ git checkout tizen_2.4
 		```
 
@@ -74,6 +77,7 @@ The kernel programming for this assignment will be done using a Tizen-flashed TM
 
 			```
 			$ rpm2cpio system-tools-0.0.1-1.1.i586.rpm | cpio -idmv
+			
 			$ cp -a usr/bin/* /usr/bin (Instead of /usr/bin, you can use any other directory in your $PATH environment variable.)
 			```
 	
