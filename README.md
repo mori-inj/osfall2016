@@ -20,6 +20,7 @@ The kernel programming for this assignment will be done using a Tizen-flashed Z3
 		2. Before starting the installation, check the [Install guide](https://developer.tizen.org/development/tools/download/installing-sdk) and [prerequisite](https://developer.tizen.org/development/tools/download/installing-sdk/prerequisites).
 		3. Execute the install manager and follow GUI instructions.   
             ```
+			$ chmod +x ./tizen-sdk-<\version>-ubuntu-<\bits>.bin
 			$ ./tizen-sdk-<\version>-ubuntu-<\bits>.bin
 			``` 
 		4.  When the installation is done, 'tizen-sdk' and 'tizen-sdk-data' folder will be created.
