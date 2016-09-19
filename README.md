@@ -18,12 +18,14 @@ The kernel programming for this assignment will be done using a Tizen-flashed TM
 		This SDK includes Smart Development Bridge (sdb) utility. We use the sdb in step 8 or problem 3 where you should push your built image or test program to your device/emulator. A brief description of sdb is in step 8.
 		1. Download the installer from [this website](https://developer.tizen.org/development/tools/download)
 		2. Before starting the installation, check the [Install guide](https://developer.tizen.org/development/tools/download/installing-sdk) and [prerequisite](https://developer.tizen.org/development/tools/download/installing-sdk/prerequisites).
-		3. Execute the install manager and follow GUI instructions.   
-            		```
+		3. Execute the install manager and follow GUI instructions.
+
+			```
 			$ chmod +x ./tizen-sdk-<\version>-ubuntu-<\bits>.bin
 			
 			$ ./tizen-sdk-<\version>-ubuntu-<\bits>.bin
-			``` 
+			```
+		
 		4.  When the installation is done, 'tizen-sdk' and 'tizen-sdk-data' folder will be created.
 		
 	2. Download prerequisites
@@ -108,16 +110,13 @@ The kernel programming for this assignment will be done using a Tizen-flashed TM
 		As I mentioned step 8, you should make the device enter the download mode first.
 		```
 		Turn off the device and then push power + volume down + home button.
-    		```
-    	
+		```
 		While the device is in download mode,
-		
 		```
 		# Send the .tar image to the target using lthor
 		
 		$ sudo lthor IMAGE.tar
 		```
-	
 		Then, the device will be rebooted and you can get the device with YOUR KERNEL!
 		
 	10. Copy the file to/from the device
