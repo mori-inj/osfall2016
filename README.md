@@ -134,7 +134,7 @@ The kernel programming for this assignment will be done using a Tizen-flashed TM
 		
 	10. Copy the file to/from the device
 		
-		In order to push some files to your device, you will have to the Smart Development Bridge ([sdb](https://developer.tizen.org/community/tip-tech/smart-development-bridge)) utility. sdb is a command line tool that makes you able to easily manage your device/emulator through your development system (desktop or laptop). You may usually use it to check the connection with the device/emulator (`sdb devices`), push or pull files (`sdb push` or `sdb pull`), and get a shell of the device/emulator (`sdb shell`). For details, you can see [this link](https://developer.tizen.org/community/tip-tech/smart-development-bridge)
+		In order to push some files to your device, you will have to the Smart Development Bridge ([sdb](https://developer.tizen.org/development/tools/common-tools/smart-development-bridge)) utility. sdb is a command line tool that makes you able to easily manage your device/emulator through your development system (desktop or laptop). You may usually use it to check the connection with the device/emulator (`sdb devices`), push or pull files (`sdb push` or `sdb pull`), and get a shell of the device/emulator (`sdb shell`). For details, you can see [this link](https://developer.tizen.org/community/tip-tech/smart-development-bridge)
      	
 		Some useful commands are below.
 		
